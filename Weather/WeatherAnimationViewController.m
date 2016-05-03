@@ -59,14 +59,40 @@
 
 - (IBAction)deleteBackgroundImage:(id)sender
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete Image Section Incomplete" message:@"You have not completed this section of the tutorial" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [av show];
+//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete Image Section Incomplete" message:@"You have not completed this section of the tutorial" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [av show];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"WeatherHTTPClientImages/"];
+    
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+    
+    NSString *desc = [self.weatherDictionary weatherDescription];
+    [self start:desc];
 }
 
 - (IBAction)updateBackgroundImage:(id)sender
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Update Image Section Incomplete" message:@"You have not completed this section of the tutorial" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [av show];
+//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Update Image Section Incomplete" message:@"You have not completed this section of the tutorial" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [av show];
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.raywenderlich.com/wp-content/uploads/2014/01/sunny-background.png"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFImageResponseSerializer serializer];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        self.backgroundImageView.image = responseObject;
+        [self saveImage:responseObject withFilename:@"background.png"];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+    }];
+    
+    [operation start];
 }
 
 - (void)saveImage:(UIImage *)image withFilename:(NSString *)filename
