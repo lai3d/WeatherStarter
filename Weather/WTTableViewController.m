@@ -200,6 +200,8 @@ static NSString * const BaseURLString = @"http://www.raywenderlich.com/demos/wea
 
 - (IBAction)apiTapped:(id)sender
 {
+    NSLog(@"apiTapped");
+    
     [self.locationManager startUpdatingLocation];
 }
 
@@ -412,6 +414,8 @@ static NSString * const BaseURLString = @"http://www.raywenderlich.com/demos/wea
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    NSLog(@"locationManager:didUpdateLocations:");
+    
     // Last object contains the most recent location
     CLLocation *newLocation = [locations lastObject];
     
@@ -430,6 +434,8 @@ static NSString * const BaseURLString = @"http://www.raywenderlich.com/demos/wea
 
 - (void)weatherHTTPClient:(WeatherHTTPClient *)client didUpdateWithWeather:(id)weather
 {
+    NSLog(@"weatherHTTPClient:didUpdateWithWeather:");
+    
     self.weather = weather;
     self.title = @"API Updated";
     [self.tableView reloadData];
@@ -437,6 +443,8 @@ static NSString * const BaseURLString = @"http://www.raywenderlich.com/demos/wea
 
 - (void)weatherHTTPClient:(WeatherHTTPClient *)client didFailWithError:(NSError *)error
 {
+    NSLog(@"weatherHTTPClient:didFailWithError:");
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Weather"
                                                         message:[NSString stringWithFormat:@"%@",error]
                                                        delegate:nil
