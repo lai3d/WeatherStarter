@@ -248,8 +248,6 @@ static NSString * const BaseURLString = @"http://www.raywenderlich.com/demos/wea
     cell.textLabel.text = [daysWeather weatherDescription];
     
     // You will add code here later to customize the cell, but it's good for now.
-    cell.textLabel.text = [daysWeather weatherDescription];
-    
     NSURL *url = [NSURL URLWithString:daysWeather.weatherIconURL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
