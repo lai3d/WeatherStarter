@@ -16,4 +16,4 @@
     #import <MobileCoreServices/MobileCoreServices.h>
 #endif
 
-#import "AFNetworking.h"
+#import <AFNetworking/AFNetworking.h>
